@@ -209,7 +209,7 @@
 
   /* Typing Text*/
   document.addEventListener("DOMContentLoaded", function () {
-  const text = "Talent. Strategic Hiring. Lasting Impact.";
+  const text = "Executive search and strategic hiring solutions for Fortune 100 and growth-driven organizations.";
   const target = document.getElementById("typing-text");
 
   let index = 0;

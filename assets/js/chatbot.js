@@ -222,7 +222,8 @@ function sendMessage() {
             text.includes("office") ||
             text.includes("where are you") ||
             text.includes("address") ||
-            text.includes("located")
+            text.includes("located") ||
+            text.includes("based")
         ) {
             botMsg.innerText =
                 "Our India office is located in New Delhi, and we also operate from London, United Kingdom.";

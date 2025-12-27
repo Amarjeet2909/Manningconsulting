@@ -2088,7 +2088,7 @@ section,
 }
 
 .form-toggle button.active {
-  background: #c6a14d;
+  background: red;
   color: #fff;
 }
 

@@ -6,7 +6,7 @@
 * License: https://bootstrapmade.com/license/
 */
 
-(function() {
+(function () {
   "use strict";
 
   /**
@@ -52,7 +52,7 @@
    * Toggle mobile nav dropdowns
    */
   document.querySelectorAll('.navmenu .toggle-dropdown').forEach(navmenu => {
-    navmenu.addEventListener('click', function(e) {
+    navmenu.addEventListener('click', function (e) {
       e.preventDefault();
       this.parentNode.classList.toggle('active');
       this.parentNode.nextElementSibling.classList.toggle('dropdown-active');
@@ -118,13 +118,13 @@
   /**
    * Init isotope layout and filters
    */
-  document.querySelectorAll('.isotope-layout').forEach(function(isotopeItem) {
+  document.querySelectorAll('.isotope-layout').forEach(function (isotopeItem) {
     let layout = isotopeItem.getAttribute('data-layout') ?? 'masonry';
     let filter = isotopeItem.getAttribute('data-default-filter') ?? '*';
     let sort = isotopeItem.getAttribute('data-sort') ?? 'original-order';
 
     let initIsotope;
-    imagesLoaded(isotopeItem.querySelector('.isotope-container'), function() {
+    imagesLoaded(isotopeItem.querySelector('.isotope-container'), function () {
       initIsotope = new Isotope(isotopeItem.querySelector('.isotope-container'), {
         itemSelector: '.isotope-item',
         layoutMode: layout,
@@ -133,8 +133,8 @@
       });
     });
 
-    isotopeItem.querySelectorAll('.isotope-filters li').forEach(function(filters) {
-      filters.addEventListener('click', function() {
+    isotopeItem.querySelectorAll('.isotope-filters li').forEach(function (filters) {
+      filters.addEventListener('click', function () {
         isotopeItem.querySelector('.isotope-filters .filter-active').classList.remove('filter-active');
         this.classList.add('filter-active');
         initIsotope.arrange({
@@ -152,7 +152,7 @@
    * Init swiper sliders
    */
   function initSwiper() {
-    document.querySelectorAll(".init-swiper").forEach(function(swiperElement) {
+    document.querySelectorAll(".init-swiper").forEach(function (swiperElement) {
       let config = JSON.parse(
         swiperElement.querySelector(".swiper-config").innerHTML.trim()
       );
@@ -170,7 +170,7 @@
   /**
    * Correct scrolling position upon page load for URLs containing hash links.
    */
-  window.addEventListener('load', function(e) {
+  window.addEventListener('load', function (e) {
     if (window.location.hash) {
       if (document.querySelector(window.location.hash)) {
         setTimeout(() => {
@@ -209,23 +209,112 @@
 
   /* Typing Text*/
   document.addEventListener("DOMContentLoaded", function () {
-  const text = "Executive search and strategic hiring solutions for Fortune 100 and growth-driven organizations.";
-  const target = document.getElementById("typing-text");
+    const text = "Executive search and strategic hiring solutions for Fortune 100 and growth-driven organizations.";
+    const target = document.getElementById("typing-text");
 
-  let index = 0;
-  const speed = 70; // typing speed (ms)
+    let index = 0;
+    const speed = 70; // typing speed (ms)
 
-  function typeEffect() {
-    if (index < text.length) {
-      target.textContent += text.charAt(index);
-      index++;
-      setTimeout(typeEffect, speed);
+    function typeEffect() {
+      if (index < text.length) {
+        target.textContent += text.charAt(index);
+        index++;
+        setTimeout(typeEffect, speed);
+      }
     }
-  }
 
-  if (target) {
-    typeEffect();
-  }
+    if (target) {
+      typeEffect();
+    }
   });
 
 })();
+
+// For Form 
+let activeFormId = 'employerForm';
+
+function switchForm(type) {
+  // Reset success message
+  const success = document.getElementById("successMessage");
+  success.style.display = "none";
+
+  // Reset and show forms
+  document.querySelectorAll('.form-wrapper form').forEach(form => {
+    form.reset();
+    form.style.display = "none";
+    form.classList.remove('active-form');
+  });
+
+  // Toggle active button
+  document.querySelectorAll('.form-toggle button')
+    .forEach(btn => btn.classList.remove('active'));
+
+  if (type === 'employer') {
+    document.getElementById('employerForm').style.display = "block";
+    document.getElementById('employerForm').classList.add('active-form');
+    document.querySelector('.form-toggle button:first-child').classList.add('active');
+    activeFormId = 'employerForm';
+  } else {
+    document.getElementById('candidateForm').style.display = "block";
+    document.getElementById('candidateForm').classList.add('active-form');
+    document.querySelector('.form-toggle button:last-child').classList.add('active');
+    activeFormId = 'candidateForm';
+  }
+}
+
+function handleSubmit(e) {
+  e.preventDefault();
+  const form = e.target;
+  const success = document.getElementById("successMessage");
+
+  fetch(form.action, {
+    method: "POST",
+    body: new FormData(form),
+    headers: { 'Accept': 'application/json' }
+  }).then(() => {
+    form.style.display = "none";
+    success.style.display = "block";
+
+    // After 3 seconds → reset & restore form
+    setTimeout(() => {
+      success.style.display = "none";
+      form.reset();
+      form.style.display = "block";
+    }, 3000);
+  });
+}
+
+// Ensure employer form loads by default
+document.addEventListener("DOMContentLoaded", () => {
+  switchForm('employer');
+});
+
+// For Awards Section
+new Swiper('.awards-slider', {
+  speed: 600,
+  loop: true,
+  autoplay: {
+    delay: 3500,
+    disableOnInteraction: false
+  },
+  slidesPerView: 3,
+  spaceBetween: 30,
+  pagination: {
+    el: '.awards .swiper-pagination',
+    clickable: true
+  },
+  breakpoints: {
+    320: {
+      slidesPerView: 1,
+      spaceBetween: 20
+    },
+    768: {
+      slidesPerView: 2,
+      spaceBetween: 25
+    },
+    1024: {
+      slidesPerView: 3,
+      spaceBetween: 30
+    }
+  }
+});

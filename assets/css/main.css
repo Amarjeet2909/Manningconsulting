@@ -29,8 +29,8 @@
 
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
 :root {
-  --nav-color: #012970;  /* The default color of the main navmenu links */
-  --nav-hover-color: #4154f1; /* Applied to main navmenu links when they are hovered over or active */
+  --nav-color: white;  /* The default color of the main navmenu links */
+  --nav-hover-color: yellow; /* Applied to main navmenu links when they are hovered over or active */
   --nav-mobile-background-color: #ffffff; /* Used as the background color for mobile navigation menu */
   --nav-dropdown-background-color: #ffffff; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
   --nav-dropdown-color: #212529; /* Used for navigation links of the dropdown items in the navigation menu. */
@@ -528,6 +528,67 @@ h6 {
 }
 
 /*--------------------------------------------------------------
+# Desktop Nav Menu – Boxed Style (SAFE ADD-ON)
+--------------------------------------------------------------*/
+@media (min-width: 1200px) {
+
+  /* Space between menu boxes (KEY FIX) */
+  .navmenu > ul > li {
+    margin: 0 6px;
+  }
+
+  .navmenu > ul > li:first-child {
+    margin-left: 0;
+  }
+
+  .navmenu > ul > li:last-child {
+    margin-right: 0;
+  }
+
+  /* FIX last menu item padding issue */
+  .navmenu li:last-child > a {
+    padding-right: 14px !important;
+  }
+
+  /* Compact premium box */
+  .navmenu > ul > li > a,
+  .navmenu > ul > li > a:focus {
+    background: linear-gradient(135deg, #42413d, #bda25e);
+    border-radius: 5px;
+
+    padding: 7px 14px;
+    font-size: 14px;
+    line-height: 1;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+
+    box-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+
+    transition: all 0.25s ease;
+  }
+
+  /* Hover & active */
+  .navmenu > ul > li:hover > a,
+  .navmenu > ul > li > a.active,
+  .navmenu > ul > li > a.active:focus {
+    background: linear-gradient(
+      135deg,
+      var(--accent-color),
+      color-mix(in srgb, var(--accent-color), #000 12%)
+    );
+    color: var(--contrast-color);
+    transform: translateY(-1px);
+  }
+}
+
+
+
+/*--------------------------------------------------------------
 # Global Footer
 --------------------------------------------------------------*/
 .footer {
@@ -840,7 +901,7 @@ section,
 }
 
 /*--------------------------------------------------------------
-# Hero Section
+# Hero Section (Modern Gradient Version)
 --------------------------------------------------------------*/
 .hero {
   width: 100%;
@@ -849,24 +910,113 @@ section,
   padding: 80px 0 60px 0;
   display: flex;
   align-items: center;
-  background: url(../img/hero-bg.png) top center no-repeat;
-  background-size: cover;
+  overflow: hidden;
+  background: #050505; /* fallback */
 }
 
+/* ---------- MODERN HERO BACKGROUND LAYERS ---------- */
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+/* Grid overlay */
+.hero::before {
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.035) 1px,
+      transparent 1px
+    );
+}
+
+/* Noise overlay */
+.hero::after {
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- GRADIENT SPHERES ---------- */
+.hero .hero-sphere {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: 0;
+}
+
+.hero .sphere-1 {
+  width: 40vw;
+  height: 40vw;
+  background: linear-gradient(40deg, rgba(0, 0, 0, 0.035), rgba(255, 153, 102, 0.4));
+  top: -15%;
+  left: -15%;
+  animation: hero-float-1 15s ease-in-out infinite alternate;
+}
+
+.hero .sphere-2 {
+  width: 45vw;
+  height: 45vw;
+  background: linear-gradient(240deg, rgba(135, 134, 141, 0.8), rgba(0, 183, 255, 0.4));
+  bottom: -25%;
+  right: -15%;
+  animation: hero-float-2 18s ease-in-out infinite alternate;
+}
+
+.hero .sphere-3 {
+  width: 30vw;
+  height: 30vw;
+  background: linear-gradient(120deg, rgba(22, 16, 39, 0.548), rgba(98, 216, 249, 0.3));
+  top: 55%;
+  left: 20%;
+  animation: hero-float-3 20s ease-in-out infinite alternate;
+}
+
+/* Glow */
+.hero .hero-glow {
+  position: absolute;
+  width: 45vw;
+  height: 45vh;
+  background: radial-gradient(circle, rgba(82, 51, 255, 0.25), transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  filter: blur(40px);
+  animation: hero-pulse 8s infinite alternate;
+  z-index: 0;
+}
+
+/* ---------- CONTENT ABOVE BACKGROUND ---------- */
+.hero .container {
+  position: relative;
+  z-index: 5;
+}
+
+/* ---------- TYPOGRAPHY ---------- */
 .hero h1 {
   margin: 0;
   font-size: 48px;
   font-weight: 700;
   line-height: 56px;
+  color: #ffffff;
 }
 
 .hero p {
-  color: color-mix(in srgb, var(--default-color), transparent 30%);
+  color: rgba(255,255,255,0.85);
   margin: 5px 0 30px 0;
   font-size: 20px;
   font-weight: 400;
 }
 
+/* ---------- BUTTONS ---------- */
 .hero .btn-get-started {
   color: var(--contrast-color);
   background: var(--accent-color);
@@ -880,7 +1030,7 @@ section,
   padding: 12px 40px;
   border-radius: 4px;
   transition: 0.5s;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
 }
 
 .hero .btn-get-started i {
@@ -890,9 +1040,7 @@ section,
 }
 
 .hero .btn-get-started:hover {
-  color: var(--contrast-color);
   background: color-mix(in srgb, var(--accent-color), transparent 15%);
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
 }
 
 .hero .btn-get-started:hover i {
@@ -902,7 +1050,7 @@ section,
 .hero .btn-watch-video {
   font-size: 16px;
   transition: 0.5s;
-  color: var(--default-color);
+  color: #ffffff;
   font-weight: 600;
 }
 
@@ -918,14 +1066,12 @@ section,
   color: var(--accent-color);
 }
 
-.hero .btn-watch-video:hover i {
-  color: color-mix(in srgb, var(--accent-color), transparent 15%);
-}
-
+/* ---------- IMAGE ANIMATION ---------- */
 .hero .animated {
   animation: up-down 2s ease-in-out infinite alternate-reverse both;
 }
 
+/* ---------- RESPONSIVE ---------- */
 @media (max-width: 640px) {
   .hero h1 {
     font-size: 28px;
@@ -939,15 +1085,47 @@ section,
   }
 }
 
-@keyframes up-down {
+/* ---------- HERO CURSOR PARTICLES ---------- */
+.hero-particles span {
+  position: absolute;
+  background: rgba(255,255,255,0.8);
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(1px);
+  animation: hero-particle-fade 2s ease-out forwards;
+}
+@keyframes hero-particle-fade {
   0% {
-    transform: translateY(10px);
+    transform: scale(1);
+    opacity: 0.6;
   }
-
   100% {
-    transform: translateY(-10px);
+    transform: scale(2.5);
+    opacity: 0;
   }
 }
+/* ---------- KEYFRAMES ---------- */
+@keyframes up-down {
+  0% { transform: translateY(10px); }
+  100% { transform: translateY(-10px); }
+}
+
+@keyframes hero-float-1 {
+  to { transform: translate(10%, 10%) scale(1.1); }
+}
+
+@keyframes hero-float-2 {
+  to { transform: translate(-10%, -5%) scale(1.15); }
+}
+
+@keyframes hero-float-3 {
+  to { transform: translate(-5%, 10%) scale(1.05); opacity: 0.6; }
+}
+
+@keyframes hero-pulse {
+  to { opacity: 0.7; transform: translate(-50%, -50%) scale(1.1); }
+}
+
 
 /*--------------------------------------------------------------
 # About Section

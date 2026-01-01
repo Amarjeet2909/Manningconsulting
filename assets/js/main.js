@@ -318,3 +318,72 @@ new Swiper('.awards-slider', {
     }
   }
 });
+
+const heroParticles = document.getElementById('hero-particles');
+const heroParticleCount = 200;
+
+for (let i = 0; i < heroParticleCount; i++) {
+  const p = document.createElement('span');
+  const size = Math.random() * 3 + 1;
+  p.style.cssText = `
+    position:absolute;
+    width:${size}px;
+    height:${size}px;
+    background:white;
+    border-radius:50%;
+    opacity:${Math.random() * 10};
+    left:${Math.random() * 100}%;
+    top:${Math.random() * 100}%;
+    animation: floatParticle ${10 + Math.random() * 10}s linear infinite;
+  `;
+  heroParticles.appendChild(p);
+}
+
+const style = document.createElement('style');
+style.innerHTML = `
+@keyframes floatParticle {
+  from { transform: translateY(0); }
+  to { transform: translateY(-120px); opacity: 0; }
+}`;
+document.head.appendChild(style);
+
+(function () {
+  const hero = document.querySelector('.hero');
+  const particleContainer = document.getElementById('hero-particles');
+  const spheres = document.querySelectorAll('.hero-sphere');
+
+  if (!hero || !particleContainer) return;
+
+  // Disable on mobile
+  if (window.innerWidth < 768) return;
+
+  hero.addEventListener('mousemove', (e) => {
+    const rect = hero.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    /* ---------- Bubble Particle ---------- */
+    const particle = document.createElement('span');
+    const size = Math.random() * 6 + 4;
+
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    particle.style.left = `${x}px`;
+    particle.style.top = `${y}px`;
+
+    particleContainer.appendChild(particle);
+
+    setTimeout(() => {
+      particle.remove();
+    }, 2000);
+
+    /* ---------- Sphere Parallax ---------- */
+    const moveX = (e.clientX / window.innerWidth - 0.5) * 20;
+    const moveY = (e.clientY / window.innerHeight - 0.5) * 20;
+
+    spheres.forEach((sphere, index) => {
+      const depth = (index + 1) * 3;
+      sphere.style.transform = `translate(${moveX / depth}px, ${moveY / depth}px)`;
+    });
+  });
+})();

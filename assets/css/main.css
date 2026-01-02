@@ -60,10 +60,50 @@
 /*--------------------------------------------------------------
 # General Styling & Shared Classes
 --------------------------------------------------------------*/
+/*--------------------------------------------------------------
+# Global Background Pattern (Entire Website)
+--------------------------------------------------------------*/
 body {
-  color: var(--default-color);
-  background-color: var(--background-color);
-  font-family: var(--default-font);
+  position: relative;
+  background: none; /* prevent conflicts */
+}
+
+/* Global background layer */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+
+  background-color: #c99ba2;
+
+  background-image:
+    /* Large angled beams */
+    linear-gradient(
+      115deg,
+      transparent 40%,
+      rgba(255, 255, 255, 0.1) 40%,
+      rgba(255, 255, 255, 0.1) 60%,
+      transparent 60%
+    ),
+    linear-gradient(
+      115deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.05) 30%,
+      rgba(255, 255, 255, 0.05) 70%,
+      transparent 70%
+    ),
+
+    /* Base gradient */
+    linear-gradient(
+      to right,
+      #fda562 0%,
+      #f8e183 100%
+    );
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 a {
@@ -143,8 +183,6 @@ h6 {
 # Global Header
 --------------------------------------------------------------*/
 .header {
-  color: var(--default-color);
-  background-color: var(--background-color);
   padding: 20px 0;
   transition: all 0.5s;
   z-index: 997;
@@ -155,8 +193,22 @@ h6 {
 }
 
 .header .logo img {
-  max-height: 80px;
+  /* Keep your desired size */
+  max-height: 100px; 
   margin-right: 8px;
+  
+  /* --- CHANGED SECTION --- */
+  background-color: #ffffff; 
+  
+  /* 1. Tight fit: Reduced padding significantly */
+  padding: 2px;  
+  
+  /* 2. Round shape: Makes the white box a circle/oval */
+  border-radius: 50%;       
+  
+  /* Optional: Keep the shadow for depth */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
 }
 
 .header .logo h1 {
@@ -202,7 +254,7 @@ h6 {
 
 .scrolled .header {
   padding: 1px 0;
-  box-shadow: 0px 0 18px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0px 0 18px rgba(0, 0, 0, 0.1); */
 }
 
 /* Index Page Header
@@ -534,7 +586,7 @@ h6 {
 
   /* Space between menu boxes (KEY FIX) */
   .navmenu > ul > li {
-    margin: 0 6px;
+    margin: 0 5px;
   }
 
   .navmenu > ul > li:first-child {
@@ -552,25 +604,45 @@ h6 {
 
   /* Compact premium box */
   .navmenu > ul > li > a,
-  .navmenu > ul > li > a:focus {
-    background: linear-gradient(135deg, #42413d, #bda25e);
-    border-radius: 5px;
+.navmenu > ul > li > a:focus {
+  /* Semi-transparent dark background */
+  background: white; 
+  
+  /* Blurs the background behind the button slightly */
+  backdrop-filter: blur(12px); 
+  -webkit-backdrop-filter: blur(12px);
+  
+  color: #000000 !important; 
+  
+  border-radius: 40px;       /* Fully rounded "pill" shape */
+  padding: 5px 15px;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.5px;     /* Spaced out slightly for elegance */
+  
+  /* Subtle dark border */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
 
-    padding: 7px 14px;
-    font-size: 14px;
-    line-height: 1;
+/* Hover Effect: Turns solid black and grows */
+.navmenu > ul > li > a:hover {
+  background: #000000;
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
 
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    white-space: nowrap;
-
-    box-shadow:
-      0 2px 6px rgba(0, 0, 0, 0.12),
-      inset 0 1px 0 rgba(255, 255, 255, 0.25);
-
-    transition: all 0.25s ease;
-  }
+/* Active Button (Home): Highlight with your Accent Blue */
+.navmenu > ul > li > a.active {
+  background: #4154f1; /* Your brand accent color */
+  box-shadow: 0 8px 20px rgba(65, 84, 241, 0.4);
+  border: none;
+}
 
   /* Hover & active */
   .navmenu > ul > li:hover > a,
@@ -578,7 +650,7 @@ h6 {
   .navmenu > ul > li > a.active:focus {
     background: linear-gradient(
       135deg,
-      var(--accent-color),
+      white,
       color-mix(in srgb, var(--accent-color), #000 12%)
     );
     color: var(--contrast-color);
@@ -592,8 +664,6 @@ h6 {
 # Global Footer
 --------------------------------------------------------------*/
 .footer {
-  color: var(--default-color);
-  background-color: var(--background-color);
   font-size: 14px;
   padding-bottom: 50px;
   position: relative;
@@ -850,8 +920,6 @@ h6 {
 --------------------------------------------------------------*/
 section,
 .section {
-  color: var(--default-color);
-  background-color: var(--background-color);
   padding: 60px 0;
   scroll-margin-top: 98px;
   overflow: clip;
@@ -911,7 +979,6 @@ section,
   display: flex;
   align-items: center;
   overflow: hidden;
-  background: #050505; /* fallback */
 }
 
 /* ---------- MODERN HERO BACKGROUND LAYERS ---------- */
@@ -925,18 +992,21 @@ section,
 
 /* Grid overlay */
 .hero::before {
-  background-size: 40px 40px;
-  background-image:
-    linear-gradient(
-      to right,
-      rgba(0, 0, 0, 0.035) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.035) 1px,
-      transparent 1px
-    );
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  background-color: #c99ba2; 
+
+  background-image: 
+    /* Layer 1: Large Angled "Beams" */
+    linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.1) 40%, rgba(255, 255, 255, 0.1) 60%, transparent 60%),
+    linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.05) 30%, rgba(255, 255, 255, 0.05) 70%, transparent 70%),
+    
+    /* Base: Your Gradient */
+    linear-gradient(to right, #fda562 50%, #f8e183 100%);
+
+  background-position: center center;
+  background-size: cover;
 }
 
 /* Noise overlay */
@@ -953,7 +1023,7 @@ section,
   z-index: 0;
 }
 
-.hero .sphere-1 {
+/* .hero .sphere-1 {
   width: 40vw;
   height: 40vw;
   background: linear-gradient(40deg, rgba(0, 0, 0, 0.035), rgba(255, 153, 102, 0.4));
@@ -978,10 +1048,10 @@ section,
   top: 55%;
   left: 20%;
   animation: hero-float-3 20s ease-in-out infinite alternate;
-}
+} */
 
 /* Glow */
-.hero .hero-glow {
+/* .hero .hero-glow {
   position: absolute;
   width: 45vw;
   height: 45vh;
@@ -992,7 +1062,7 @@ section,
   filter: blur(40px);
   animation: hero-pulse 8s infinite alternate;
   z-index: 0;
-}
+} */
 
 /* ---------- CONTENT ABOVE BACKGROUND ---------- */
 .hero .container {
@@ -1086,7 +1156,7 @@ section,
 }
 
 /* ---------- HERO CURSOR PARTICLES ---------- */
-.hero-particles span {
+/* .hero-particles span {
   position: absolute;
   background: rgba(255,255,255,0.8);
   border-radius: 50%;
@@ -1103,7 +1173,7 @@ section,
     transform: scale(2.5);
     opacity: 0;
   }
-}
+} */
 /* ---------- KEYFRAMES ---------- */
 @keyframes up-down {
   0% { transform: translateY(10px); }
@@ -1131,7 +1201,8 @@ section,
 # About Section
 --------------------------------------------------------------*/
 .about .content {
-  background-color: color-mix(in srgb, var(--accent-color), transparent 95%);
+  background-color: rgba(255, 255, 255, 0.75); /* 👈 change */
+  backdrop-filter: blur(6px);                 /* optional but premium */
   padding: 40px;
 }
 
@@ -1244,7 +1315,7 @@ section,
 .values .card img {
   display: block;
   margin: 0 auto 25px auto; /* center horizontally */
-  max-width: 110px;
+  max-width: 200px;
   transition: transform 0.4s ease;
 }
 
@@ -1258,7 +1329,7 @@ section,
 .values .card p {
   font-size: 15px;
   line-height: 1.6;
-  color: color-mix(in srgb, var(--default-color), transparent 25%);
+  color: black;
 }
 
 
@@ -1308,7 +1379,34 @@ section,
   background-color: var(--surface-color);
   box-shadow: 0px 0 30px rgba(0, 0, 0, 0.1);
   padding: 30px;
+  /* Fancy diagonal curves */
+  border-radius: 0 22px 0 22px;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+/* Optional hover polish */
+.stats .stats-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
+}
+
+.stats .stats-item::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(
+    135deg,
+    var(--accent-color),
+    transparent
+  );
+  border-top-right-radius: 22px;
+  opacity: 0.15;
+}
+
 
 .stats .stats-item i {
   color: var(--accent-color);
@@ -1328,7 +1426,7 @@ section,
   padding: 0;
   margin: 0;
   font-family: var(--heading-font);
-  font-size: 16px;
+  font-size: 20px;
 }
 
 /*--------------------------------------------------------------
@@ -1433,8 +1531,8 @@ section,
 }
 
 .alt-features .icon-box p {
-  font-size: 15px;
-  color: color-mix(in srgb, var(--default-color), transparent 30%);
+  font-size: 20px;
+  color: color-mix(in srgb, var(--default-color), transparent 0%);
   margin-bottom: 0;
 }
 
@@ -1915,8 +2013,8 @@ section,
 }
 
 .testimonials .testimonial-item .testimonial-img {
-  width: 90px;
-  border-radius: 50%;
+  width: 150px;
+  border-radius: 80%;
   border: 4px solid var(--background-color);
   margin: 0 auto;
 }
@@ -1952,8 +2050,8 @@ section,
 }
 
 .testimonials .swiper-pagination .swiper-pagination-bullet {
-  width: 12px;
-  height: 12px;
+  width: 8px;
+  height: 8px;
   background-color: color-mix(in srgb, var(--default-color), transparent 85%);
   opacity: 1;
 }
@@ -2102,8 +2200,8 @@ section,
 }
 
 .clients .swiper-pagination .swiper-pagination-bullet {
-  width: 12px;
-  height: 12px;
+  width: 8px;
+  height: 8px;
   opacity: 1;
   background-color: color-mix(in srgb, var(--default-color), transparent 80%);
 }
@@ -3310,9 +3408,9 @@ body {
 }
 
 .awards .award-card p {
-  font-size: 14px;
+  font-size: 20px;
   margin-bottom: 6px;
-  color: color-mix(in srgb, var(--default-color), transparent 30%);
+  color: color-mix(in srgb, var(--default-color), transparent 0%);
 }
 
 .awards .award-card span {
@@ -3348,4 +3446,47 @@ body {
 
 .awards .swiper-pagination-bullet-active {
   background: var(--accent-color);
+}
+
+@media (max-width: 400px) {
+
+  .awards .award-card {
+    padding: 24px 18px;
+    border-radius: 12px;
+  }
+
+  .awards .award-card i {
+    font-size: 34px;
+    margin-bottom: 12px;
+  }
+
+  .awards .award-card h4 {
+    font-size: 8px;
+    margin-bottom: 4px;
+  }
+
+  .awards .award-card p {
+    font-size: 10px;
+    margin-bottom: 4px;
+  }
+
+  .awards .award-card span {
+    font-size: 12px;
+  }
+
+  /* Disable lift hover on touch devices */
+  .awards .award-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* Reduce space below slider */
+  .awards .swiper {
+    padding-bottom: 50px;
+  }
+
+  .awards .swiper-pagination-bullet {
+    width: 5px;
+    height: 5px;
+  }
 }

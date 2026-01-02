@@ -2,12 +2,78 @@
   background: linear-gradient(135deg, #0b1c39, #081529);
   color: #fff;
 } */
+/*--------------------------------------------------------------
+# Hiring Process Section – Premium Gradient Background
+--------------------------------------------------------------*/
 .hiring-process-section {
-  background: #ffffff;
   color: #0b1c39;
+  position: relative;
+  overflow: hidden;
+
+  /* Base color */
+  background-color: #c99ba2;
+
+  /* Angled beams + soft gradient */
+  background-image:
+    linear-gradient(
+      115deg,
+      transparent 40%,
+      rgba(255, 255, 255, 0.12) 40%,
+      rgba(255, 255, 255, 0.12) 60%,
+      transparent 60%
+    ),
+    linear-gradient(
+      115deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.06) 30%,
+      rgba(255, 255, 255, 0.06) 70%,
+      transparent 70%
+    ),
+    linear-gradient(
+      to right,
+      #fda562 0%,
+      #f8e183 100%
+    );
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
+.hiring-process-diagram {
+    color: #0b1c39;
+  position: relative;
+  overflow: hidden;
 
+  /* Base color */
+  background-color: #c99ba2;
+
+  /* Angled beams + soft gradient */
+  background-image:
+    linear-gradient(
+      115deg,
+      transparent 40%,
+      rgba(255, 255, 255, 0.12) 40%,
+      rgba(255, 255, 255, 0.12) 60%,
+      transparent 60%
+    ),
+    linear-gradient(
+      115deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.06) 30%,
+      rgba(255, 255, 255, 0.06) 70%,
+      transparent 70%
+    ),
+    linear-gradient(
+      to right,
+      #fda562 0%,
+      #f8e183 100%
+    );
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
 .section-badge {
   display: inline-block;
   padding: 6px 18px;

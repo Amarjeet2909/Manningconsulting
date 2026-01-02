@@ -1,15 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>About Us | Manning Consulting</title>
+
+  <!-- GLOBAL BACKGROUND PATTERN -->
+  <style>
+    body {
+      position: relative;
+      background: transparent;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+
+      background-color: #c99ba2;
+
+      background-image:
+        linear-gradient(
+          115deg,
+          transparent 40%,
+          rgba(255, 255, 255, 0.1) 40%,
+          rgba(255, 255, 255, 0.1) 60%,
+          transparent 60%
+        ),
+        linear-gradient(
+          115deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.05) 30%,
+          rgba(255, 255, 255, 0.05) 70%,
+          transparent 70%
+        ),
+        linear-gradient(
+          to right,
+          #fda562 0%,
+          #f8e183 100%
+        );
+
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  </style>
 </head>
+
 
 <body style="
   margin:0;
-  background:#f4f6fb;
   font-family: Arial, Helvetica, sans-serif;
 ">
 

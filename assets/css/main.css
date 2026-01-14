@@ -218,6 +218,10 @@ h6 {
   color: var(--heading-color);
 }
 
+/* .justify-content-center {
+  text-align: justify;
+} */
+
 .header .btn-getstarted,
 .header .btn-getstarted:focus {
   color: var(--contrast-color);
@@ -234,6 +238,28 @@ h6 {
 .header .btn-getstarted:focus:hover {
   color: var(--contrast-color);
   background: color-mix(in srgb, var(--accent-color), transparent 15%);
+}
+
+/* Initial state (top of page) */
+.index-page .header {
+  background: transparent;
+  box-shadow: none;
+  transition: background-color 0.35s ease, box-shadow 0.35s ease, padding 0.35s ease;
+}
+
+/* When scrolled */
+.index-page.scrolled .header {
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  padding: 8px 0;
+}
+
+/* Logo scale-down on scroll (optional but premium) */
+.index-page.scrolled .header .logo img {
+  max-height: 70px;
 }
 
 @media (max-width: 1200px) {
@@ -382,14 +408,24 @@ h6 {
 /* Navmenu - Mobile */
 @media (max-width: 1199px) {
   .mobile-nav-toggle {
-    color: var(--nav-color);
+    color: var(--nav-dropdown-hover-color);
     font-size: 28px;
     line-height: 0;
     margin-right: 10px;
     cursor: pointer;
     transition: color 0.3s;
   }
-
+  .navmenu .listing-dropdown ul {
+    position: static;
+    display: none;
+    z-index: 99;
+    padding: 10px 0;
+    margin: 10px 20px;
+    background-color: var(--nav-dropdown-background-color);
+    border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+    box-shadow: none;
+    transition: all 0.5s ease-in-out;
+  }
   .navmenu {
     padding: 0;
     z-index: 9997;
@@ -943,13 +979,13 @@ section,
 }
 
 .section-title h2 {
-  font-size: 13px;
+  font-size: 18px;
   letter-spacing: 1px;
   font-weight: 700;
   padding: 8px 20px;
   margin: 0;
-  background: color-mix(in srgb, var(--accent-color), transparent 90%);
-  color: var(--accent-color);
+  background: color-mix(in srgb, var(--accent-color), transparent 10%);
+  color: white;
   display: inline-block;
   text-transform: uppercase;
   border-radius: 50px;
@@ -1173,7 +1209,52 @@ section,
     transform: scale(2.5);
     opacity: 0;
   }
-} */
+}  */
+
+/* ---------- HERO CURSOR BUBBLES ---------- */
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.hero-particles span {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  pointer-events: none;
+
+background: radial-gradient(
+  circle,
+  rgba(65, 84, 241, 0.8),
+  rgba(65, 84, 241, 0.4),
+  transparent 70%
+);
+
+  animation: bubble-fade 1.8s ease-out forwards;
+}
+
+@keyframes bubble-fade {
+  0% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+/* Disable on touch devices */
+@media (max-width: 1024px) {
+  .hero-particles {
+    display: none;
+  }
+}
+
 /* ---------- KEYFRAMES ---------- */
 @keyframes up-down {
   0% { transform: translateY(10px); }
@@ -1216,11 +1297,14 @@ section,
 .about .content h2 {
   font-size: 24px;
   font-weight: 700;
+  text-align: justify;
+  line-height: 1.2;
 }
 
 .about .content p {
   margin: 15px 0 30px 0;
   line-height: 24px;
+  text-align: justify;
 }
 
 .about .content .btn-read-more {
@@ -1328,6 +1412,7 @@ section,
 
 .values .card p {
   font-size: 15px;
+  text-align: justify;
   line-height: 1.6;
   color: black;
 }
@@ -1350,7 +1435,7 @@ section,
 
 /* Highlight "Why Choose Us" title */
 .values .section-title h2 {
-  color: var(--accent-color);
+  color: white;
   font-weight: 700;
   letter-spacing: 0.5px;
   position: relative;
@@ -1513,6 +1598,10 @@ section,
 /*--------------------------------------------------------------
 # Alt Features Section
 --------------------------------------------------------------*/
+.Employee-Benefit p {
+  text-align: justify;
+}
+
 .alt-features .icon-box {
   display: flex;
 }
@@ -2032,10 +2121,11 @@ section,
 }
 
 .testimonials .testimonial-item p {
+  text-align: justify;
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
-  line-height: 1.7;
+  line-height: 1.5;
   margin: 0 auto 18px auto;
   color: color-mix(in srgb, var(--default-color), transparent 10%);
 }
@@ -2364,7 +2454,7 @@ section,
 }
 
 .form-toggle button.active {
-  background: red;
+  background: var(--nav-dropdown-hover-color);
   color: #fff;
 }
 
@@ -3372,6 +3462,68 @@ body {
   font-size: 18px;
 }
 
+/* --------------------------------------------------
+   CHATBOT – MOBILE OPTIMIZATION
+-------------------------------------------------- */
+
+@media (max-width: 480px) {
+
+  /* Chat icon stays reachable */
+  .chat-icon {
+    bottom: 69px;
+    right: 16px;
+    width: 52px;
+    height: 52px;
+  }
+
+  /* Chatbot becomes full-width bottom sheet */
+  .chatbot-box {
+    right: 0;
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    max-width: 100%;
+    height: 85vh;
+    max-height: 85vh;
+
+    border-radius: 16px 16px 0 0;
+    transform-origin: bottom center;
+  }
+
+  /* Header stays visible */
+  .chatbot-box .card-header {
+    font-size: 15px;
+    padding: 12px;
+  }
+
+  /* Scrollable body adapts to screen */
+  .chat-body {
+    height: calc(85vh - 120px);
+    padding: 12px;
+  }
+
+  /* Messages readable on small screens */
+  .message {
+    font-size: 13px;
+    max-width: 85%;
+  }
+
+  /* Input stays touch-friendly */
+  .card-footer {
+    padding: 10px;
+  }
+
+  .card-footer input {
+    font-size: 14px;
+  }
+
+  .card-footer button {
+    padding: 10px 14px;
+  }
+}
+
+
 /* SAFETY FIX FOR AOS SECTIONS */
 .contact {
   visibility: visible !important;
@@ -3386,57 +3538,85 @@ body {
 /*--------------------------------------------------------------
 # Awards & Recognition Slider
 --------------------------------------------------------------*/
+/*--------------------------------------------------------------
+# Awards & Recognition Slider
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+# Awards & Recognition – Stable + Premium
+--------------------------------------------------------------*/
+
+.awards .swiper {
+  padding-bottom: 50px;
+}
+
+.awards .swiper-slide {
+  display: flex;
+  justify-content: center;
+}
+
+/* CARD */
 .awards .award-card {
+  width: 100%;
+  max-width: 320px;
   background: var(--background-color);
-  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 85%);
+  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 80%);
   padding: 36px 26px;
-  border-radius: 14px;
-  height: 100%;
+  border-radius: 16px;
+  text-align: center;
   transition: all 0.35s ease;
+  position: relative;
+}
+
+/* Highlight major achievements */
+.awards .award-card.highlight {
+  background: linear-gradient(180deg, #fff7df, #ffffff);
+  border-color: #c6a14d;
+}
+
+/* Year badge */
+.awards .award-year {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 30px;
+  background: #c6a14d;
+  color: #1a1a1a;
 }
 
 .awards .award-card i {
-  font-size: 42px;
-  color: var(--accent-color);
-  margin-bottom: 16px;
+  font-size: 40px;
+  color: #c6a14d;
+  margin-bottom: 14px;
 }
 
 .awards .award-card h4 {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 700;
   margin-bottom: 6px;
 }
 
 .awards .award-card p {
-  font-size: 20px;
-  margin-bottom: 6px;
-  color: color-mix(in srgb, var(--default-color), transparent 0%);
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
 }
 
-.awards .award-card span {
-  font-size: 13px;
-  font-weight: 500;
-  color: color-mix(in srgb, var(--default-color), transparent 45%);
+/* Hover only on non-touch */
+@media (hover: hover) {
+  .awards .award-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+  }
 }
 
-/* Hover Effect */
-.awards .award-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
-  border-color: var(--accent-color);
-}
-
-/* Pagination dots */
-/* Fix pagination position */
-.awards .swiper {
-  padding-bottom: 50px; /* space reserved for dots */
-}
-
+/* Pagination – SINGLE LINE */
 .awards .swiper-pagination {
   bottom: 0 !important;
-  position: absolute;
-  width: 100%;
-  text-align: center;
+  white-space: nowrap;
 }
 
 .awards .swiper-pagination-bullet {
@@ -3448,45 +3628,40 @@ body {
   background: var(--accent-color);
 }
 
+/*--------------------------------------------------------------
+# SMALL MOBILE – GUARANTEED NOT TO BREAK
+--------------------------------------------------------------*/
 @media (max-width: 400px) {
 
   .awards .award-card {
+    max-width: 260px;
     padding: 24px 18px;
-    border-radius: 12px;
   }
 
   .awards .award-card i {
     font-size: 34px;
-    margin-bottom: 12px;
   }
 
   .awards .award-card h4 {
-    font-size: 8px;
-    margin-bottom: 4px;
+    font-size: 14px;
   }
 
   .awards .award-card p {
-    font-size: 10px;
-    margin-bottom: 4px;
+    font-size: 13px;
   }
 
-  .awards .award-card span {
-    font-size: 12px;
+  .awards .award-year {
+    font-size: 11px;
+    padding: 3px 10px;
   }
 
-  /* Disable lift hover on touch devices */
   .awards .award-card:hover {
     transform: none;
     box-shadow: none;
   }
 
-  /* Reduce space below slider */
-  .awards .swiper {
-    padding-bottom: 50px;
-  }
-
   .awards .swiper-pagination-bullet {
-    width: 5px;
-    height: 5px;
+    width: 6px;
+    height: 6px;
   }
 }

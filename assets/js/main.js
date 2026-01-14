@@ -290,100 +290,76 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // For Awards Section
+// For Awards Section (FIXED & MOBILE-SAFE)
 new Swiper('.awards-slider', {
   speed: 600,
   loop: true,
+  centeredSlides: false,
+  watchOverflow: true,
+  grabCursor: true,
+
   autoplay: {
     delay: 3500,
     disableOnInteraction: false
   },
-  slidesPerView: 3,
-  spaceBetween: 30,
+
   pagination: {
     el: '.awards .swiper-pagination',
     clickable: true
   },
+
+  // 🔒 CRITICAL: Force single row behavior
+  slidesPerView: 1,
+  spaceBetween: 20,
+
   breakpoints: {
-    320: {
+    576: {
       slidesPerView: 1,
       spaceBetween: 20
     },
     768: {
       slidesPerView: 2,
-      spaceBetween: 25
+      spaceBetween: 24
     },
-    1024: {
+    1200: {
       slidesPerView: 3,
       spaceBetween: 30
     }
-  }
+  },
+
+  // 🔧 Prevent layout collapse
+  observer: true,
+  observeParents: true,
+  resizeObserver: true
 });
 
-const heroParticles = document.getElementById('hero-particles');
-const heroParticleCount = 200;
 
-for (let i = 0; i < heroParticleCount; i++) {
-  const p = document.createElement('span');
-  const size = Math.random() * 3 + 1;
-  p.style.cssText = `
-    position:absolute;
-    width:${size}px;
-    height:${size}px;
-    background:white;
-    border-radius:50%;
-    opacity:${Math.random() * 10};
-    left:${Math.random() * 100}%;
-    top:${Math.random() * 100}%;
-    animation: floatParticle ${10 + Math.random() * 10}s linear infinite;
-  `;
-  heroParticles.appendChild(p);
-}
+/* ---------- HERO CURSOR BUBBLES ---------- */
+(() => {
+  const hero = document.querySelector("#hero");
+  const particles = document.getElementById("hero-particles");
 
-const style = document.createElement('style');
-style.innerHTML = `
-@keyframes floatParticle {
-  from { transform: translateY(0); }
-  to { transform: translateY(-120px); opacity: 0; }
-}`;
-document.head.appendChild(style);
+  if (!hero || !particles) return;
 
-(function () {
-  const hero = document.querySelector('.hero');
-  const particleContainer = document.getElementById('hero-particles');
-  const spheres = document.querySelectorAll('.hero-sphere');
+  // Disable on touch devices
+  if ("ontouchstart" in window) return;
 
-  if (!hero || !particleContainer) return;
+  hero.addEventListener("mousemove", (e) => {
+    const bubble = document.createElement("span");
 
-  // Disable on mobile
-  if (window.innerWidth < 768) return;
-
-  hero.addEventListener('mousemove', (e) => {
     const rect = hero.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    const size = Math.random() * 6 + 6; // bubble size
 
-    /* ---------- Bubble Particle ---------- */
-    const particle = document.createElement('span');
-    const size = Math.random() * 6 + 4;
+    bubble.style.width = `${size}px`;
+    bubble.style.height = `${size}px`;
+    bubble.style.left = `${e.clientX - rect.left}px`;
+    bubble.style.top = `${e.clientY - rect.top}px`;
 
-    particle.style.width = `${size}px`;
-    particle.style.height = `${size}px`;
-    particle.style.left = `${x}px`;
-    particle.style.top = `${y}px`;
+    particles.appendChild(bubble);
 
-    particleContainer.appendChild(particle);
-
-    setTimeout(() => {
-      particle.remove();
-    }, 2000);
-
-    /* ---------- Sphere Parallax ---------- */
-    const moveX = (e.clientX / window.innerWidth - 0.5) * 20;
-    const moveY = (e.clientY / window.innerHeight - 0.5) * 20;
-
-    spheres.forEach((sphere, index) => {
-      const depth = (index + 1) * 3;
-      sphere.style.transform = `translate(${moveX / depth}px, ${moveY / depth}px)`;
-    });
+    // Remove after animation
+    setTimeout(() => bubble.remove(), 1200);
   });
 })();
+
+

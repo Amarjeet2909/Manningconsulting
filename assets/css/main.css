@@ -1109,7 +1109,7 @@ section,
 /* ---------- TYPOGRAPHY ---------- */
 .hero h1 {
   margin: 0;
-  font-size: 48px;
+  font-size: 40px;
   font-weight: 700;
   line-height: 56px;
   color: #ffffff;
@@ -2269,36 +2269,115 @@ background: radial-gradient(
   opacity: 1;
 }
 
-/*--------------------------------------------------------------
-# Clients Section
---------------------------------------------------------------*/
-.clients .swiper-slide img {
-  transition: 0.3s;
+/* ================================
+   Clients Section – EXTRA LARGE LOGOS
+================================ */
+
+/* Force single-row slider */
+.clients .swiper-wrapper {
+  align-items: center;
+  flex-wrap: nowrap;
 }
 
+/* Center slides */
+.clients .swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 🔥 BIG LOGOS */
+.clients .swiper-slide img {
+  height: 160px;          /* ⬅ MAIN INCREASE */
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  opacity: 0.9;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+/* Hover effect */
 .clients .swiper-slide img:hover {
+  transform: scale(1.12);
   opacity: 1;
 }
 
-.clients .swiper-wrapper {
-  height: auto;
-}
-
+/* Pagination – compact & clean */
 .clients .swiper-pagination {
-  margin-top: 20px;
-  position: relative;
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
 }
 
 .clients .swiper-pagination .swiper-pagination-bullet {
-  width: 8px;
-  height: 8px;
-  opacity: 1;
-  background-color: color-mix(in srgb, var(--default-color), transparent 80%);
+  width: 5px;
+  height: 5px;
+  opacity: 0.35;
+  background-color: var(--default-color);
 }
 
 .clients .swiper-pagination .swiper-pagination-bullet-active {
   background-color: var(--accent-color);
+  transform: scale(1.4);
+  opacity: 1;
 }
+
+/* ================================
+   RESPONSIVE CONTROL
+================================ */
+/* Desktop only */
+@media (min-width: 992px) {
+
+  /* Increase slide width so image can grow */
+  .clients .swiper-slide {
+    min-width: 220px;        /* 🔥 THIS IS THE KEY */
+  }
+
+  /* Bigger logos */
+  .clients .swiper-slide img {
+    height: 170px;           /* real visible increase */
+    width: auto;
+  }
+}
+
+/* Large desktop / wide screens */
+@media (min-width: 1200px) {
+  .clients .swiper-slide {
+    min-width: 260px;        /* even bigger slides */
+  }
+
+  .clients .swiper-slide img {
+    height: 190px;
+  }
+}
+/* Large tablets / small laptops */
+@media (max-width: 1200px) {
+  .clients .swiper-slide img {
+    height: 140px;
+  }
+}
+
+/* Tablets */
+@media (max-width: 992px) {
+  .clients .swiper-slide img {
+    height: 120px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+  .clients .swiper-slide img {
+    height: 100px;   /* still BIG on mobile */
+  }
+
+  .clients .swiper-pagination .swiper-pagination-bullet {
+    width: 4px;
+    height: 4px;
+  }
+}
+
+
 
 /*--------------------------------------------------------------
 # Recent Posts Section
@@ -3542,126 +3621,115 @@ body {
 # Awards & Recognition Slider
 --------------------------------------------------------------*/
 
-/*--------------------------------------------------------------
-# Awards & Recognition – Stable + Premium
---------------------------------------------------------------*/
-
-.awards .swiper {
-  padding-bottom: 50px;
-}
-
-.awards .swiper-slide {
-  display: flex;
-  justify-content: center;
-}
-
-/* CARD */
-.awards .award-card {
+/* SWIPER FIX */
+.awardsShowcaseSwiper,
+.awardsShowcaseSwiper .swiper-wrapper,
+.awardsShowcaseSwiper .swiper-slide {
   width: 100%;
-  max-width: 320px;
-  background: var(--background-color);
-  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 80%);
-  padding: 36px 26px;
-  border-radius: 16px;
-  text-align: center;
-  transition: all 0.35s ease;
+  height: auto;
+}
+
+/* GRID */
+.award-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 60px;
+  align-items: center;
+  padding: 40px 0;
+}
+
+/* TROPHY */
+.award-center img {
+  width: 300px;
+  display: block;
+  margin: auto;
+  animation: popIn 1s ease;
+}
+
+/* COLUMNS */
+.award-col {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.award-col.left { text-align: right; }
+.award-col.right { text-align: left; }
+
+/* BUBBLES */
+.award-bubble {
   position: relative;
+  padding: 22px 22px 22px 60px;
+  border-radius: 18px 6px 18px 6px;
+  background: linear-gradient(135deg, rgba(0,0,0,0.04), rgba(0,0,0,0.01));
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  transition: transform .3s ease;
 }
 
-/* Highlight major achievements */
-.awards .award-card.highlight {
-  background: linear-gradient(180deg, #fff7df, #ffffff);
-  border-color: #c6a14d;
+.award-bubble:hover {
+  transform: translateY(-6px);
 }
 
-/* Year badge */
-.awards .award-year {
+/* ICON BADGE */
+.award-bubble i {
   position: absolute;
-  top: 14px;
-  right: 14px;
-  font-size: 12px;
-  font-weight: 700;
-  padding: 4px 12px;
-  border-radius: 30px;
-  background: #c6a14d;
-  color: #1a1a1a;
+  left: 16px;
+  top: 18px;
+  font-size: 22px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
 }
 
-.awards .award-card i {
-  font-size: 40px;
-  color: #c6a14d;
-  margin-bottom: 14px;
+/* COLOR VARIANTS */
+.color-1 i { background:#6366f1; }
+.color-2 i { background:#22c55e; }
+.color-3 i { background:#14b8a6; }
+.color-4 i { background:#0ea5e9; }
+.color-5 i { background:#f59e0b; }
+.color-6 i { background:#8b5cf6; }
+.color-7 i { background:#ec4899; }
+.color-8 i { background:#10b981; }
+.color-9 i { background:#3b82f6; }
+.color-10 i { background:#22c55e; }
+.color-11 i { background:#64748b; }
+.color-12 i { background:#ef4444; }
+.color-13 i { background:#facc15; color:#000; }
+.color-14 i { background:#94a3b8; }
+.color-15 i { background:#06b6d4; }
+.color-16 i { background:#a855f7; }
+.color-17 i { background:#0ea5e9; }
+.color-18 i { background:#f59e0b; color:#000; }
+.color-19 i { background:#22c55e; }
+.color-20 i { background:#6366f1; }
+.color-21 i { background:#14b8a6; }
+.color-22 i { background:#eab308; color:#000; }
+
+.award-bubble h4 { font-size: 17px; margin-bottom: 4px; }
+.award-bubble p { font-size: 14px; opacity: .85; }
+.award-bubble span { font-size: 13px; opacity: .7; }
+
+/* HIGHLIGHT */
+.award-bubble.highlight {
+  border: 2px solid #f59e0b;
+  transform: scale(1.05);
 }
 
-.awards .award-card h4 {
-  font-size: 17px;
-  font-weight: 700;
-  margin-bottom: 6px;
+/* MOBILE */
+@media (max-width:768px){
+  .award-grid{grid-template-columns:1fr;text-align:center}
+  .award-center{order:-1}
+  .award-center img{width:220px}
+  .award-bubble{max-width:360px;margin:auto}
+  .award-col.left,.award-col.right{text-align:center}
 }
 
-.awards .award-card p {
-  font-size: 15px;
-  font-weight: 600;
-  margin: 0;
-}
-
-/* Hover only on non-touch */
-@media (hover: hover) {
-  .awards .award-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
-  }
-}
-
-/* Pagination – SINGLE LINE */
-.awards .swiper-pagination {
-  bottom: 0 !important;
-  white-space: nowrap;
-}
-
-.awards .swiper-pagination-bullet {
-  background: color-mix(in srgb, var(--accent-color), transparent 55%);
-  opacity: 1;
-}
-
-.awards .swiper-pagination-bullet-active {
-  background: var(--accent-color);
-}
-
-/*--------------------------------------------------------------
-# SMALL MOBILE – GUARANTEED NOT TO BREAK
---------------------------------------------------------------*/
-@media (max-width: 400px) {
-
-  .awards .award-card {
-    max-width: 260px;
-    padding: 24px 18px;
-  }
-
-  .awards .award-card i {
-    font-size: 34px;
-  }
-
-  .awards .award-card h4 {
-    font-size: 14px;
-  }
-
-  .awards .award-card p {
-    font-size: 13px;
-  }
-
-  .awards .award-year {
-    font-size: 11px;
-    padding: 3px 10px;
-  }
-
-  .awards .award-card:hover {
-    transform: none;
-    box-shadow: none;
-  }
-
-  .awards .swiper-pagination-bullet {
-    width: 6px;
-    height: 6px;
-  }
+/* ANIMATION */
+@keyframes popIn {
+  from{transform:scale(.9);opacity:0}
+  to{transform:scale(1);opacity:1}
 }

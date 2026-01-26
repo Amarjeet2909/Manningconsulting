@@ -362,4 +362,20 @@ new Swiper('.awards-slider', {
   });
 })();
 
-
+// New Award Section code
+document.addEventListener("DOMContentLoaded", function () {
+  new Swiper(".awardsShowcaseSwiper", {
+    slidesPerView: 1,
+    loop: true,
+    grabCursor: true,
+    autoplay: {
+      delay: 3500,
+      disableOnInteraction: false,
+      pauseOnMouseEnter: true
+    },
+    pagination: {
+      el: ".awardsShowcaseSwiper .swiper-pagination",
+      clickable: true
+    }
+  });
+});

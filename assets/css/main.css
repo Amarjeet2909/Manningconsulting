@@ -593,6 +593,7 @@ h6 {
 
 /* Listing Dropdown - Mobile */
 @media (max-width: 1199px) {
+  
   .navmenu .listing-dropdown ul {
     position: static;
     display: none;
@@ -3732,4 +3733,57 @@ body {
 @keyframes popIn {
   from{transform:scale(.9);opacity:0}
   to{transform:scale(1);opacity:1}
+}
+
+/* ============================================================
+FIX — Mobile toggle MUST be visible on page load
+============================================================ */
+@media (max-width: 1199px) {
+
+  /* Force toggle visibility ALWAYS */
+  .mobile-nav-toggle {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    position: absolute !important;
+    top: 22px !important;
+    right: 18px !important;
+
+    font-size: 32px !important;
+    line-height: 1 !important;
+
+    color: #000 !important;          /* 🔑 FORCE DARK COLOR */
+    background: rgba(255,255,255,0.85); /* 🔑 visible on transparent header */
+    border-radius: 50% !important;
+    padding: 6px !important;
+
+    z-index: 2147483647 !important;
+    cursor: pointer !important;
+  }
+
+  /* When menu opens, invert color for dark overlay */
+  body.mobile-nav-active .mobile-nav-toggle {
+    color: #fff !important;
+    background: rgba(0,0,0,0.4) !important;
+    position: fixed !important;
+  }
+
+  /* Fullscreen menu override (kept minimal) */
+  body.mobile-nav-active .navmenu {
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(33,37,41,0.85) !important;
+    z-index: 2147483646 !important;
+  }
+
+  body.mobile-nav-active .navmenu > ul {
+    position: fixed !important;
+    inset: 0 !important;
+    padding: 90px 20px 800px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow-y: auto !important;
+    background: var(--nav-mobile-background-color) !important;
+  }
 }
